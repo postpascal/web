@@ -1,0 +1,51 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+body {
+background: #FFFFF0;
+}
+
+img.relate {
+position: absolute;
+left: 500px;
+top:250px;
+  width:400px;
+  height:400px
+}
+img.alipay{
+  width:160px;
+  height:60px;
+
+}
+
+</style>
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">KKflix</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li ><a href="/personal">Home</a></li>
+      <li class="dropdown">
+       <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{username}}<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+         <li><a href="/history">Watching history</a></li>
+         <li><a href="#">Liked movies</a></li>
+       </ul>
+      <li class="active"><a href="/donate">Donate</a></li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+ <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+</ul>
+  </div>
+</nav>
+<center><h1>Just scan the QR code below with Alipay.<br>Thanks for your kindness</h1></center>
+<img class="relate" src="/static/donate.jpg" >
+<img class="alipay" src="/static/alipay.png" >
+</body>
+</html>

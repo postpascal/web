@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Register</title>
+
+<style>
+/*This style code is editd based on style.css file, which file is in static with license.txt  */
+@charset "utf-8";
+@import url(http://weloveiconfonts.com/api/?family=fontawesome);
+[class*="fontawesome-"]:before {
+  font-family: 'FontAwesome', sans-serif;
+}
+.flash{
+  color: #262626;
+}
+
+body {
+  background: #FFFFF0;
+}
+input {
+  border: none;
+  font-family: 'Open Sans', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.5em;
+  padding: 0;
+  -webkit-appearance: none;
+}
+p {
+  color:#262626
+}
+after { clear: both; }
+
+#login {
+  margin: 50px auto;
+  width: 320px;
+}
+
+#login form {
+  margin: auto;
+  padding: 22px 22px 22px 22px;
+  width: 100%;
+  border-radius: 5px;
+  background: #262626;
+
+}
+
+#login form span {
+  background-color: #363b41;
+  border-right: 3px solid #434a52;
+  color: #606468;
+  display: block;
+  float: left;
+  line-height: 50px;
+  text-align: center;
+  width: 50px;
+  height: 50px;
+}
+
+#login form input[type="text"] {
+  background-color: #3b4148;
+  color: #a9a9a9;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 235px;
+  height: 50px;
+}
+
+#login form input[type="password"] {
+  background-color: #3b4148;
+  border-radius: 0px 3px 3px 0px;
+  color: #a9a9a9;
+  margin-bottom: 1em;
+  padding: 0 16px;
+  width: 235px;
+  height: 50px;
+}
+
+#login form input[type="submit"] {
+  background: #b5cd60;
+  width: 100%;
+  height: 40px;
+  border-radius: 3px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out;
+}
+#login form input[type="submit"]:hover {
+  background: #262626;
+}
+</style>
+<body>
+  <center><h1>Welcome To KKFLIX</h1>
+ <div id="login">
+    <form action="{{ url_for('register') }}" name='form-register' method="post">
+      <span class="fontawesome-user"></span>
+        <input type="text" id="user" name="username" placeholder="Username">
+      <span class="fontawesome-lock"></span>
+        <input type="password" id="pass" name="password" placeholder="Password">
+
+        <span class="fontawesome-lock"></span>
+          <input type="password" id="pass" name="password_confirm" placeholder="Password Confirm">
+      <input type="submit" value="Register">
+</form>
+</div>
+
+ <p >Already have account?</p><a href="/">  Sign in here  <a>
+{% for message in get_flashed_messages() %}
+ <div class="flash"> <h1>{{ message }}</h1></div>
+{% endfor %}
+</center>
+
+</body>
+</html>

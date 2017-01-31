@@ -1,0 +1,128 @@
+<html>
+<head>
+    <!-- flowplayer javascript component -->
+    <script src="http://releases.flowplayer.org/js/flowplayer-3.2.12.min.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<style>
+body {
+background: #FFFFF0;
+}
+input.relate{
+position:absolute;
+right: 40px;
+}
+img.relate {
+  width:10%;
+  display: inline-block;
+  float:left;
+  margin: 20px;
+  padding: 10px;
+}
+h.relate {
+  display: none;
+  float:left;
+  margin: 20px;
+  padding: 10px;
+}
+div.relate {
+    width: 1800px;
+    height:400px;
+    padding: 25px;
+    margin: 20px;
+}
+
+h1.relate{
+position:relative;
+left:10px
+top:90px;
+}
+a.relate:hover + h.relate{
+    display: inline-block;
+}
+</style>
+
+</head>
+<!-- video player Part code from https://www.leaseweb.com/labs/2013/11/streaming-video-demand-nginx-rtmp-module/ -->
+<body>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand">KKflix</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li ><a href="/personal">Home</a></li>
+        <li class="dropdown">
+         <a class="dropdown-toggle" data-toggle="dropdown" href="#">{{username}}<span class="caret"></span></a>
+        <ul class="dropdown-menu">
+           <li><a href="/history">Watching history</a></li>
+           <li><a href="/liked">Liked movies</a></li>
+         </ul>
+        <li><a href="/donate">Donate</a></li>
+      </ul>
+      <form class="navbar-form navbar-left" method="post">
+        <div class="form-group">
+          <input type="text" name="search_title" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Search</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+   <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+ </ul>
+    </div>
+  </nav>
+  <h1>{{movie['title']}}:</h1>
+<div id="player" style="width:700px;height:390px;margin:0 auto;text-align:center">
+    <img   src="{{movie['poster_image']}}" height="390" width="700" /></div>
+<script>
+function SetCookie(c_name,value,expiredays)
+	{
+		var exdate=new Date()
+		exdate.setDate(exdate.getDate()+expiredays)
+		document.cookie=c_name+ "=" +escape(value)+
+		((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
+	}
+
+function Likeit(c_name,value,expiredays) {
+    document.getElementById("like").innerHTML = "Already Like It";
+    var exdate=new Date()
+    exdate.setDate(exdate.getDate()+expiredays)
+    document.cookie=c_name+ "=" +escape(value)+
+    ((expiredays==null) ? "" : ";expires="+exdate.toGMTString())
+
+  }
+$f("player", "http://releases.flowplayer.org/swf/flowplayer-3.2.16.swf", {
+    clip: {
+        url: '{{movie['id']}}.mp4',
+        scaling: 'fit',
+        provider: 'hddn'
+    },
+
+    plugins: {
+        hddn: {
+             url: "flowplayer.rtmp-3.2.12.swf",
+
+            // netConnectionUrl defines where the streams are found
+            netConnectionUrl: 'rtmp://localhost:1935/vod2'
+        }
+    },
+    canvas: {
+        backgroundGradient: 'none'
+    }
+});
+</script>
+<br><br><br>
+<center><button onClick=Likeit('liked_id',"{{movie['id']}}",'1')>Like It!</button></center>
+  <center><p id="like"></p></center>
+<div class="relate">
+  <h1 class="relate">Some similar movies:</h1>
+{% for other_movie in relate_movie %}
+  <a class="relate" href="/watching" onClick=SetCookie('movie_id',"{{other_movie['id']}}",'1')><img class="relate"  src= {{ other_movie['poster_image']}} ></a>
+  <h class="relate">Title:{{other_movie['title']}}<br>Rate:{{other_movie['rated']}}<br>Duration:{{other_movie['duration']}}mins</h>
+{% endfor %}
+</div>
+
+</body>
+</html>
